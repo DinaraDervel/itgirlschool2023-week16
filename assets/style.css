@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(28, 21, 48, 0.8856792717086834) 100%
+  );
+  font-family: arial, sans-serif;
+  font-size: 18px;
+}
+.thiscontainer {
+  width: 700px;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 50px;
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(79, 184, 177, 0.8856792717086834) 100%
+  );
+  border-radius: 5%;
+}
+
+section {
+  margin: 30px 0;
+  padding: 20px 0;
+}
+
+p,
+form {
+  margin-bottom: 1.5rem;
+}
+
+div.section {
+  border-top: 1px solid #c0c0c0;
+  border-bottom: 1px solid #c0c0c0;
+  margin: 20px 0;
+  padding: 20px 0;
+}
+
+.form {
+  width: 50%;
+  border: 1px dotted black;
+  padding: 15px;
+}
+
+.form__label {
+  padding: 5px 0 0 10px;
+}
+.other__label {
+  display: inline;
+  margin-right: 15px;
+  font-weight: 400;
+}
+
+.error-message {
+  width: 180px;
+  color: red;
+}
+
+.form__submit {
+  margin-top: 15px;
+}
+
+input[type="email"].incorrect {
+  border-color: red;
+}

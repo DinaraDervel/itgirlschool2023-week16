@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Registration form</title>
+    <link rel="stylesheet" href="./assets/normalize.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./assets/skeleton.css" />
+  </head>
+
+  <body>
+    <div class="thiscontainer">
+      <h1>Registration form</h1>
+      <form name="form" class="firstForm" novalidate>
+        <label for="name" class="form__label">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form__input"
+          placeholder="enter your name"
+          required
+          minlength="2"
+          maxlength="20"
+        />
+        <br />
+
+        <label for="email" class="form__label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form__input"
+          placeholder="enter your email"
+          required
+        />
+        <br />
+
+        <label for="age" class="form__label">Age:</label>
+        <input
+          type="number"
+          id="age"
+          name="age"
+          class="form__input"
+          placeholder="enter your age"
+          required
+        />
+        <br />
+
+        <label class="form__label">Sex:</label>
+        <input
+          type="radio"
+          name="sex"
+          id="female"
+          value="female"
+          class="form__input"
+        />
+        <label for="female" class="other__label">female</label>
+        <input
+          type="radio"
+          name="sex"
+          id="male"
+          value="male"
+          class="form__input"
+        />
+        <label for="male" class="other__label">male</label>
+
+        <br />
+
+        <label for="select" class="form__label">Profession:</label>
+        <select id="select" name="select" class="form__select" required>
+          <option disabled selected value="">Select an option</option>
+          <option value="Physician">Physician</option>
+          <option value="Programmer">Programmer</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Designer">Designer</option>
+          <option value="Designer">Designer</option>
+          <option value="Salesman">Salesman</option>
+          <option value="Other">Other</option>
+        </select>
+        <br />
+
+        <label for="password" class="form__label">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form__input"
+          minlength="8"
+          pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/"
+          placeholder="enter password"
+          required
+        />
+        <br />
+
+        <label for="repeatPassword" class="form__label">Repeat password:</label>
+        <input
+          type="password"
+          id="repeatPassword"
+          name="repeatPassword"
+          class="form__input"
+          minlength="8"
+          pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/"
+          placeholder="repeat password"
+          required
+        />
+        <br />
+
+        <br />
+        <input
+          type="checkbox"
+          id="checkbox"
+          name="checkbox"
+          class="form__checkbox"
+          required
+        />
+        <label for="checkbox" class="other__label"
+          >I agree with data processing</label
+        >
+        <br />
+
+        <button type="submit" name="button" class="form__submit">Send</button>
+        <p class="error-message" id="errorMessage"></p>
+      </form>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
