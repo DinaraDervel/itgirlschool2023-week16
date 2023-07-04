@@ -51,19 +51,19 @@ div.section {
 .form__label {
   padding: 5px 0 0 10px;
 }
+
 .other__label {
   display: inline;
   margin-right: 15px;
   font-weight: 400;
 }
 
-.error-message {
-  width: 180px;
-  color: red;
-}
-
 .form__submit {
   margin-top: 15px;
+}
+
+input[type="number"] {
+  width: 150px;
 }
 
 input[type="text"].incorrect,

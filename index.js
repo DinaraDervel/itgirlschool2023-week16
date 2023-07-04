@@ -1,113 +1,102 @@
 const thisForm = document.forms.form;
-console.log(thisForm);
-
-let errors = [], flags = [];
+const inputs = document.querySelectorAll("input");
+const select = document.querySelector("select");
+const errorMessage = document.getElementsByClassName('error');
+const selectErrorMessage = document.getElementsByClassName('error-select');
+let errors = [];
 
 function checkValidity(input, index) {
 	let validity = input.validity;
 	let localErrors = [];
 	if (validity.typeMismatch) {
-		localErrors.push('Неверный формат заполнения');
+		localErrors.push('Incorrect filling format');
 	}
 	if (validity.patternMismatch) {
-		localErrors.push('Не соответствует паттерну заполнения');
+		localErrors.push('Does not match the filling pattern');
 	}
 
 	if (validity.rangeOverflow) {
-		localErrors.push('Значение превосходит максимально допустимое');
+		localErrors.push('The value exceeds the maximum permissible value');
 	}
 
 	if (validity.rangeUnderflow) {
-		localErrors.push('Значение меньше минимально допустимого');
+		localErrors.push('The value is less than the minimum allowable');
 	}
 
 	if (validity.stepMismatch) {
-		localErrors.push('Недопустимое значение в соответствии с шагом');
+		localErrors.push('Invalid value according to the step');
 	}
 
 	if (validity.tooLong) {
-		localErrors.push('Значение слишком длинное');
+		localErrors.push('The value is too long');
 	}
 
 	if (validity.tooShort) {
-		localErrors.push('Значение слишком короткое');
+		localErrors.push('The value is too short');
 	}
 
 	if (validity.valueMissing) {
-		localErrors.push('Необходимо заполнить поле');
+		localErrors.push('You need to fill in the field');
 	}
+
+	//check validity of email
+	if (input.getAttribute('type') === 'email' && !(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu).test(input.value)) {
+		localErrors.push('Email must be in the format email@domain.com');
+	}
+
+	//check validity of passwords
+	if (input.getAttribute('type') === 'password' && !(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/).test(input.value)) {
+		localErrors.push('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+		const passwords = document.querySelectorAll('input[type="password"]');
+		if (passwords[0].value !== passwords[1].value) {
+			localErrors.push('Passwords don\'t match');
+		}
+	}
+
 	errors[index] = localErrors;
+	if (localErrors.length === 0) return true;
 }
 
 function checkAll() {
-	let inputs = document.querySelectorAll("input");
-	let select = document.querySelector("select");
 	let i = 0;
-	for (let input of inputs) {
-		checkValidity(input, i);
-		if (errors[i].length !== 0) {
-			if (!flags[i]) {
-				input.classList.add('incorrect');
-				const errorMessage = document.createElement('span');
-				errorMessage.textContent = errors[i].join('. ');
-				errorMessage.classList.add("error");
-				input.parentElement.appendChild(errorMessage);
-				flags[i] = 1;
-			}
-		}
-		else {
-			input.classList.remove('incorrect');
-			clearErrors(i);
-			flags[i] = 0;
-		}
-		i++;
-	}
+	for (let input of inputs) checkValidity(input, i++);
 	checkValidity(select, i);
-	if (errors[i].length !== 0) {
-		if (!flags[i]) {
-			select.classList.add('incorrect');
-			const errorMessage = document.createElement('span');
-			errorMessage.textContent = errors[i].join('. ');
-			errorMessage.classList.add("error");
-			select.parentElement.appendChild(errorMessage);
-			flags[i] = 1;
-		}
-	} else {
-		select.classList.remove('incorrect');
-		clearErrors(i);
-		flags[i] = 0;
-	}
-	console.log(errors);
-	console.log(flags);
 }
 
-function clearErrors(index) {
-	let inputs = document.querySelectorAll("input");
-	let select = document.querySelector("select");
-	let errorMessages = document.getElementsByClassName('error');
-	console.log(errorMessages);
 
-	// for (let input of inputs) input.classList.remove('incorrect');
-	// select.classList.remove('incorrect');
-	if (errorMessages.length !== 0) errorMessages[index].remove();
-	console.log(errorMessages);
-
+function showErrorMessage() {
+	let i = 0;
+	for (let input of inputs) {
+		if (errors[i].length !== 0) input.classList.add('incorrect');
+		else input.classList.remove('incorrect');
+		errorMessage[i].textContent = errors[i].join('. ');
+		i++;
+	}
+	if (errors[i].length !== 0) select.classList.add('incorrect');
+	else select.classList.remove('incorrect');
+	selectErrorMessage[0].textContent = errors[i].join('. ');
 }
 
 
 thisForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	errors = [];
-	//flags = [];
 	checkAll();
+	showErrorMessage()
 	let k = 0;
 	for (let i = 0; i < errors.length; i++) {
 		if (errors[i].length === 0) k++;
 	}
-	if (k === errors.length) thisForm.reset();
+	if (k === errors.length) {
+		for (let input of inputs) console.log(input.value);
+		thisForm.reset();
+	}
 });
-// document.querySelectorAll('input').forEach((el, index) => el.addEventListener('change', () => {
-// 	// 	checkValidity(el, index);
-// 	checkAll();
 
-// }));
+
+thisForm.addEventListener('change', (e) => {
+	e.preventDefault();
+	errors = [];
+	checkAll();
+	showErrorMessage();
+});
