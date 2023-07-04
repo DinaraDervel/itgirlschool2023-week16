@@ -47,6 +47,8 @@ function checkValidity(input, index) {
 	//check validity of passwords
 	if (input.getAttribute('type') === 'password' && !(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/).test(input.value)) {
 		localErrors.push('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+	}
+	if (input.getAttribute('type')) {
 		const passwords = document.querySelectorAll('input[type="password"]');
 		if (passwords[0].value !== passwords[1].value) {
 			localErrors.push('Passwords don\'t match');
@@ -54,7 +56,6 @@ function checkValidity(input, index) {
 	}
 
 	errors[index] = localErrors;
-	if (localErrors.length === 0) return true;
 }
 
 function checkAll() {
@@ -88,7 +89,10 @@ thisForm.addEventListener('submit', (e) => {
 		if (errors[i].length === 0) k++;
 	}
 	if (k === errors.length) {
-		for (let input of inputs) console.log(input.value);
+		for (let input of inputs)
+			if (input.type === "radio" && !input.checked) continue;
+			else console.log(input.value);
+		console.log(select.value);
 		thisForm.reset();
 	}
 });
